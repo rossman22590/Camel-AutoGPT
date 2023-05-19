@@ -1,4 +1,4 @@
-# Build server
+ Build server
 FROM python:3.9-slim as server
 WORKDIR /app/server
 COPY ./server/requirements.txt ./
@@ -20,5 +20,9 @@ WORKDIR /app
 COPY --from=server /app/server /app
 COPY --from=client /app/client/build /app/client/build
 
-CMD ["nginx", "-g", "daemon off;"]
+# Nginx config
+RUN rm /etc/nginx/conf.d/default.conf
+COPY ./nginx/nginx.conf /etc/nginx/conf.d
+EXPOSE 80 5000
 
+CMD ["nginx", "-g", "daemon off;"]
