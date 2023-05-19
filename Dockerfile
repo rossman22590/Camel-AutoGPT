@@ -22,15 +22,6 @@ COPY ./client .
 
 RUN yarn build
 
-# Stage 3: Final
-FROM nginx:alpine
-
-COPY --from=client /app/client/build /usr/share/nginx/html
-COPY --from=server /app/server /app
-
-RUN rm /etc/nginx/conf.d/default.conf
-COPY nginx/nginx.conf /etc/nginx/conf.d
-
 EXPOSE 80 5000
 
 CMD ["nginx", "-g", "daemon off;"]
