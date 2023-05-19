@@ -20,10 +20,5 @@ WORKDIR /app
 COPY --from=server /app/server /app
 COPY --from=client /app/client/build /app/client/build
 
-# Nginx config
-RUN rm /etc/nginx/conf.d/default.conf
-COPY ./nginx/nginx.conf /etc/nginx/conf.d
-EXPOSE 80 5000
-
 CMD ["nginx", "-g", "daemon off;"]
 
